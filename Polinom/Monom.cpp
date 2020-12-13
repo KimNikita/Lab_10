@@ -4,7 +4,7 @@ TMonom::TMonom(TMonomData _data) : TListElem<TMonomData>(_data)
 {
 }
 
-TMonom::TMonom(double* _data, int _dim, double _K) : TListElem<TMonomData>({ 0,0,0 })
+TMonom::TMonom(double* _data, int _dim, double _K) : TListElem<TMonomData>(0)
 {
   if (_dim < 0)
     throw - 1;

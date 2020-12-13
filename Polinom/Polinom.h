@@ -13,8 +13,8 @@ public:
   TPolinom& operator +=(TMonom& _v);
 
   TPolinom operator *(TPolinom& _v);
-  TPolinom operator +(TPolinom& _v);
-  TPolinom operator -(TPolinom& _v);
+  TPolinom operator +(const TPolinom& _v);
+  TPolinom operator -(const TPolinom& _v);
 
   friend ostream& operator <<(ostream& ostr, const TPolinom& P);
   friend istream& operator >>(istream& istr, TPolinom& P);

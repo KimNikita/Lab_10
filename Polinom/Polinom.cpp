@@ -85,12 +85,12 @@ TPolinom TPolinom::operator*(TPolinom& _v)
   return res;
 }
 
-TPolinom TPolinom::operator+(TPolinom& _v)
+TPolinom TPolinom::operator+(const TPolinom& _v)
 {
   return TPolinom();
 }
 
-TPolinom TPolinom::operator-(TPolinom& _v)
+TPolinom TPolinom::operator-(const TPolinom& _v)
 {
   return TPolinom();
 }
