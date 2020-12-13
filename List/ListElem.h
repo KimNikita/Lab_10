@@ -20,6 +20,7 @@ public:
 
   TListElem* GetNext();
   TListElem* GetPrev();
+  virtual TListElem<T>* Clone();
 
   void SetData(T _data);
   void SetNext(TListElem* _next);
@@ -64,6 +65,13 @@ template<class T>
 inline TListElem<T>* TListElem<T>::GetPrev()
 {
   return prev;
+}
+
+template<class T>
+inline TListElem<T>* TListElem<T>::Clone()
+{
+  TListElem<T>* res = new TListElem<T>(*this);
+  return res;
 }
 
 template<class T>

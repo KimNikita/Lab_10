@@ -97,6 +97,12 @@ TMonomData& TMonom::operator*()
   return data;
 }
 
+TMonom* TMonom::Clone()
+{
+  TMonom* res = new TMonom(*this);
+  return res;
+}
+
 double TMonom::GetK()
 {
   return data.K;

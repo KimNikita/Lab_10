@@ -17,7 +17,6 @@ public:
 
 class TMonom : public TListElem<TMonomData>
 {
-protected:
 public:
   TMonom(TMonomData _data);
   TMonom(double* _data = 0, int _dim = 0, double _K = 0);
@@ -31,6 +30,8 @@ public:
 
   TMonomData& operator*(int);
   TMonomData& operator*();
+
+  virtual TMonom* Clone();
 
   double GetK();
   void SetK(double _K);
