@@ -40,6 +40,8 @@ public:
   int GetDim();
   void SetDim(int _dim);
 
+  string GetMonom();
+
   TMonom& operator =(const TMonom& _v);
   double& operator [](int i);
 

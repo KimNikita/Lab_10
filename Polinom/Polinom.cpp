@@ -240,6 +240,18 @@ TPolinom TPolinom::operator-(const TPolinom& _v)
   return res;
 }
 
+string TPolinom::GetPolinom()
+{
+  string res = "";
+  TMonom* i = static_cast<TMonom*>(root);
+  while (i != 0)
+  {
+    res += i->GetMonom();
+    i = i->GetNext();
+  }
+  return res;
+}
+
 ostream& operator<<(ostream& ostr, const TPolinom& P)
 {
   if (P.IsEmpty())

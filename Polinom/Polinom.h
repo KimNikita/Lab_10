@@ -16,6 +16,8 @@ public:
   TPolinom operator +(const TPolinom& _v);
   TPolinom operator -(const TPolinom& _v);
 
+  string GetPolinom();
+
   friend ostream& operator <<(ostream& ostr, const TPolinom& P);
   friend istream& operator >>(istream& istr, TPolinom& P);
 

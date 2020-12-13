@@ -146,6 +146,27 @@ void TMonom::SetDim(int _dim)
   }
 }
 
+string TMonom::GetMonom()
+{
+  string res = "";
+  if (data.K < 0)
+  {
+    res += '-';
+    res += data.K * (-1) + '0';
+  }
+  else
+    res += data.K + '0';
+  for (int i = 0; i < data.dim; i++)
+    if (data.data[i] < 0)
+    {
+      res += '-';
+      res += data.data[i] * (-1) + '0';
+    }
+    else
+      res += data.data[i] + '0';
+  return res;
+}
+
 TMonom& TMonom::operator=(const TMonom& _v)
 {
   if (this == &_v)
