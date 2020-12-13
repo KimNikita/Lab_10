@@ -17,7 +17,11 @@ int main()
   p2 += d;
 
   p3 = p1 * p2;
+  cout << p3 << endl;
   p3 = p1 + p2;
+  cout << p3 << endl;
+  p3 = p1 - p2;
+  cout << p3 << endl;
 
   return 0;
 }

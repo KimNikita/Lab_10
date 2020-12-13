@@ -14,7 +14,7 @@ TPolinom::~TPolinom()
 {
 }
 
-TPolinom& TPolinom::operator=(TPolinom& _v)
+TPolinom& TPolinom::operator=(const TPolinom& _v)
 {
   if (this == &_v) {
     return *this;
@@ -33,7 +33,7 @@ TPolinom& TPolinom::operator=(TPolinom& _v)
     }
     root = 0;
   }
-
+  this->count = _v.count;
   TMonom* i = static_cast<TMonom*>(_v.root);
   while (i != 0)
   {
@@ -50,6 +50,7 @@ TPolinom& TPolinom::operator+=(TMonom& _v)
   {
     this->root = _v.Clone();
     this->end = this->root;
+    this->count++;
   }
   else
   {
@@ -74,6 +75,7 @@ TPolinom& TPolinom::operator+=(TMonom& _v)
             this->root = _v2;
 
           temp->SetPrev(_v2);
+          this->count++;
           return *this;
         }
         else if (temp->GetNext() == 0)
@@ -81,6 +83,7 @@ TPolinom& TPolinom::operator+=(TMonom& _v)
           _v2->SetPrev(temp);
           temp->SetNext(_v2);
           this->end = _v2;
+          this->count++;
           return *this;
         }
         else
@@ -90,7 +93,7 @@ TPolinom& TPolinom::operator+=(TMonom& _v)
   return *this;
 }
 
-TPolinom TPolinom::operator*(TPolinom& _v)
+TPolinom TPolinom::operator*(const TPolinom& _v)
 {
   TPolinom res;
   TMonom* tmp1 = static_cast<TMonom*>(this->root);
@@ -239,11 +242,35 @@ TPolinom TPolinom::operator-(const TPolinom& _v)
 
 ostream& operator<<(ostream& ostr, const TPolinom& P)
 {
+  if (P.IsEmpty())
+    return ostr;
+
+  TMonom* i = static_cast<TMonom*>(P.root);
+  ostr << *i;
+  i = i->GetNext();
+
+  while (i != 0)
+  {
+    if (i->GetK() > 0)
+      ostr << "+";
+    ostr << *i;
+    i = i->GetNext();
+  }
   return ostr;
 }
 
 istream& operator>>(istream& istr, TPolinom& P)
 {
+  int count;
+  istr >> count;
+  TPolinom res;
+  for (int i = 0; i < count; i++)
+  {
+    TMonom tmp;
+    istr >> tmp;
+    res += tmp;
+  }
+  P = res;
   return istr;
 }
 
@@ -258,5 +285,15 @@ void TPolinom::WriteToFile(string name)
 
 ofstream& operator<<(ofstream& ofstr, const TPolinom& P)
 {
+  if (P.IsEmpty())
+    return ofstr;
+
+  TMonom* i = static_cast<TMonom*>(P.root);
+  while (i != 0)
+  {
+    ofstr << *i;
+    i = i->GetNext();
+  }
+
   return ofstr;
 }
