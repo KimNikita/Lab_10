@@ -11,7 +11,7 @@ public:
 
   TMonomData(int t);
   TMonomData(double* _data = 0, int _dim = 0, double _K = 0);
-  TMonomData(TMonomData& _v);
+  TMonomData(const TMonomData& _v);
   ~TMonomData();
 };
 
@@ -21,7 +21,7 @@ protected:
 public:
   TMonom(TMonomData _data);
   TMonom(double* _data = 0, int _dim = 0, double _K = 0);
-  TMonom(TMonom& _v);
+  TMonom(const TMonom& _v);
   ~TMonom();
 
   bool operator ==(const TMonom& _v);

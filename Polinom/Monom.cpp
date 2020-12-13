@@ -4,7 +4,7 @@ TMonom::TMonom(TMonomData _data) : TListElem<TMonomData>(_data)
 {
 }
 
-TMonom::TMonom(double* _data, int _dim, double _K) : TListElem<TMonomData>(TMonomData(0))
+TMonom::TMonom(double* _data, int _dim, double _K) : TListElem<TMonomData>({ 0,0,0 })
 {
   if (_dim < 0)
     throw - 1;
@@ -20,7 +20,7 @@ TMonom::TMonom(double* _data, int _dim, double _K) : TListElem<TMonomData>(TMono
   }
 }
 
-TMonom::TMonom(TMonom& _v) :TListElem<TMonomData>(_v)
+TMonom::TMonom(const TMonom& _v) :TListElem<TMonomData>(_v)
 {
   prev = 0;
   next = 0;
@@ -331,7 +331,7 @@ TMonomData::TMonomData(double* _data, int _dim, double _K)
   }
 }
 
-TMonomData::TMonomData(TMonomData& _v)
+TMonomData::TMonomData(const TMonomData& _v)
 {
   this->dim = _v.dim;
   this->K = _v.K;
