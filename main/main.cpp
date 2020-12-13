@@ -17,6 +17,7 @@ int main()
   p2 += d;
 
   p3 = p1 * p2;
+  p3 = p1 + p2;
 
   return 0;
 }

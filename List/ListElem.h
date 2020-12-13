@@ -18,7 +18,7 @@ public:
 
   T& GetData();
 
-  TListElem* GetNext();
+  virtual TListElem* GetNext();
   TListElem* GetPrev();
   virtual TListElem<T>* Clone();
 

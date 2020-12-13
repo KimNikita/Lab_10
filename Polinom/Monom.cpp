@@ -97,6 +97,11 @@ TMonomData& TMonom::operator*()
   return data;
 }
 
+TMonom* TMonom::GetNext()
+{
+  return static_cast<TMonom*>(next);
+}
+
 TMonom* TMonom::Clone()
 {
   TMonom* res = new TMonom(*this);

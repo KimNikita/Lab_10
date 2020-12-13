@@ -31,6 +31,7 @@ public:
   TMonomData& operator*(int);
   TMonomData& operator*();
 
+  virtual TMonom* GetNext();
   virtual TMonom* Clone();
 
   double GetK();

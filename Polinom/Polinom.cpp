@@ -16,6 +16,31 @@ TPolinom::~TPolinom()
 
 TPolinom& TPolinom::operator=(TPolinom& _v)
 {
+  if (this == &_v) {
+    return *this;
+  }
+
+  if (this->root != 0)
+  {
+    TMonom* i = static_cast<TMonom*>(this->root);
+    TMonom* p = 0;
+
+    while (i != 0)
+    {
+      p = i;
+      i = i->GetNext();
+      delete p;
+    }
+    root = 0;
+  }
+
+  TMonom* i = static_cast<TMonom*>(_v.root);
+  while (i != 0)
+  {
+    *this += *i;
+    i = i->GetNext();
+  }
+
   return *this;
 }
 
@@ -59,7 +84,7 @@ TPolinom& TPolinom::operator+=(TMonom& _v)
           return *this;
         }
         else
-          temp = static_cast<TMonom*>(temp->GetNext());
+          temp = temp->GetNext();
       }
   }
   return *this;
@@ -78,21 +103,138 @@ TPolinom TPolinom::operator*(TPolinom& _v)
     {
       TMonom tmp3 = *tmp2 * *tmp1;
       res += tmp3;
-      tmp2 = static_cast<TMonom*>(tmp2->GetNext());
+      tmp2 = tmp2->GetNext();
     }
-    tmp1 = static_cast<TMonom*>(tmp1->GetNext());
+    tmp1 = tmp1->GetNext();
   }
   return res;
 }
 
 TPolinom TPolinom::operator+(const TPolinom& _v)
 {
-  return TPolinom();
+  if (_v.root == 0 || this->root == 0)
+    throw - 1;
+
+  TPolinom res;
+  TMonom* tmp1 = static_cast<TMonom*>(_v.root);
+  TMonom* tmp2 = static_cast<TMonom*>(this->root);
+  TMonom* r = 0;
+
+  while (tmp1 != 0 && tmp2 != 0)
+  {
+    TMonom tmp3;
+    if (*tmp1 == *tmp2)
+    {
+      tmp3 = (*tmp1 + *tmp2)[0];
+      tmp1 = tmp1->GetNext();
+      tmp2 = tmp2->GetNext();
+    }
+    else if (*tmp1 < *tmp2)
+    {
+      tmp3 = *tmp2;
+      tmp2 = tmp2->GetNext();
+    }
+    else
+    {
+      tmp3 = *tmp1;
+      tmp1 = tmp1->GetNext();
+    }
+
+    if (r == 0)
+    {
+      res += tmp3;
+      r = static_cast<TMonom*>(res.root);
+    }
+    else
+    {
+      r->SetNext(tmp3.Clone());
+      r->GetNext()->SetPrev(static_cast<TMonom*>(r));
+      r = r->GetNext();
+    }
+  }
+
+  if (tmp1 != 0)
+    while (tmp1 != 0)
+    {
+      r->SetNext(tmp1->Clone());
+      r->GetNext()->SetPrev(static_cast<TMonom*>(r));
+      r = r->GetNext();
+      tmp1 = tmp1->GetNext();
+    }
+  else if (tmp2 != 0)
+    while (tmp2 != 0)
+    {
+      r->SetNext(tmp2->Clone());
+      r->GetNext()->SetPrev(static_cast<TMonom*>(r));
+      r = r->GetNext();
+      tmp2 = tmp2->GetNext();
+    }
+
+  return res;
 }
 
 TPolinom TPolinom::operator-(const TPolinom& _v)
 {
-  return TPolinom();
+  if (_v.root == 0 || this->root == 0)
+    throw - 1;
+
+  TPolinom res;
+  TMonom* tmp1 = static_cast<TMonom*>(_v.root);
+  TMonom* tmp2 = static_cast<TMonom*>(this->root);
+  TMonom* r = 0;
+
+  while (tmp1 != 0 && tmp2 != 0)
+  {
+    TMonom tmp3;
+    if (*tmp1 == *tmp2)
+    {
+      tmp3 = (*tmp1 + *tmp2)[0];
+      tmp1 = tmp1->GetNext();
+      tmp2 = tmp2->GetNext();
+    }
+    else if (*tmp1 < *tmp2)
+    {
+      tmp3 = *tmp2;
+      tmp2 = tmp2->GetNext();
+    }
+    else
+    {
+      tmp1->SetK(tmp1->GetK() * (-1));
+      tmp3 = *tmp1;
+      tmp1 = tmp1->GetNext();
+    }
+
+    if (r == 0)
+    {
+      res += tmp3;
+      r = static_cast<TMonom*>(res.root);
+    }
+    else
+    {
+      r->SetNext(tmp3.Clone());
+      r->GetNext()->SetPrev(static_cast<TMonom*>(r));
+      r = r->GetNext();
+    }
+  }
+
+  if (tmp1 != 0)
+    while (tmp1 != 0)
+    {
+      r->SetNext(tmp1->Clone());
+      r->GetNext()->SetPrev(static_cast<TMonom*>(r));
+      r = r->GetNext();
+      tmp1 = tmp1->GetNext();
+    }
+  else if (tmp2 != 0)
+    while (tmp2 != 0)
+    {
+      r->SetNext(tmp2->Clone());
+      r->GetNext()->SetPrev(static_cast<TMonom*>(r));
+      r = r->GetNext();
+      tmp2 = tmp2->GetNext();
+    }
+
+  return res;
 }
 
 ostream& operator<<(ostream& ostr, const TPolinom& P)
